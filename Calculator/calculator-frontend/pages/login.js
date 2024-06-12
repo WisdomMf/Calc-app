@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import styles from '../styles/login.module.css';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -14,14 +15,15 @@ const LoginPage = () => {
                 username,
                 password
             });
-            localStorage.setItem('token', response.data);
+            localStorage.setItem('auth-token', response.data);
             router.push('/dashboard');
         } catch (err) {
-            setError('Login failed: ' + err.message);
+            setError('Login failed: ' + (err.response ? err.response.data : err.message));
         }
     };
+
     return (
-        <div>
+        <div className={styles.loginContainer}>
             <h1>Login</h1>
             <input
                 type="text"
