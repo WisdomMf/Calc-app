@@ -6,13 +6,12 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5001; // Changed port to 5001
+const PORT = process.env.PORT || 5000;
 
-// Use CORS middleware
 app.use(cors({
-    origin: 'http://localhost:3000', // Allow only your frontend domain
-    methods: ['GET', 'POST'], // Allow only specific methods
-    allowedHeaders: ['Content-Type', 'auth-token'] // Allow only specific headers
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'auth-token']
 }));
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -26,31 +25,12 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', (err) => {
     console.error('MongoDB connection error:', err);
-    process.exit(1); // Exit process with failure
+    process.exit(1);
 });
 
 app.use(express.json());
 
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
-
-const User = mongoose.model('User', userSchema);
-
-// Middleware to verify token
-const verifyToken = (req, res, next) => {
-    const token = req.header('auth-token');
-    if (!token) return res.status(401).send('Access denied');
-
-    try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = verified;
-        next();
-    } catch (err) {
-        res.status(400).send('Invalid token');
-    }
-};
+const User = require('./models/User'); // Adjust the path as needed
 
 // Login route
 app.post('/login', async (req, res) => {
@@ -74,15 +54,23 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Verify token middleware
+function verifyToken(req, res, next) {
+    const token = req.header('auth-token');
+    if (!token) return res.status(401).send('Access denied');
+
+    try {
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = verified;
+        next();
+    } catch (err) {
+        res.status(400).send('Invalid token');
+    }
+}
+
 // Example of a protected route
 app.get('/protected-route', verifyToken, (req, res) => {
     res.send('This is a protected route');
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
 });
 
 app.listen(PORT, () => {

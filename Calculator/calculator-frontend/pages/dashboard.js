@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import styles from '../styles/dashboard.module.css'; // Adjust the import path as necessary
+import styles from '../styles/dashboard.module.css';
 
 const Dashboard = () => {
     const [data, setData] = useState(null);
@@ -11,6 +11,10 @@ const Dashboard = () => {
         const fetchData = async () => {
             try {
                 const token = localStorage.getItem('auth-token');
+                if (!token) {
+                    router.push('/login');
+                    return;
+                }
                 const response = await axios.get('http://localhost:5000/protected-route', {
                     headers: {
                         'auth-token': token
@@ -28,6 +32,11 @@ const Dashboard = () => {
         fetchData();
     }, [router]);
 
+    const handleLogout = () => {
+        localStorage.removeItem('auth-token');
+        router.push('/login');
+    };
+
     return (
         <div className={styles.dashboard}>
             <div className={styles.sidebar}>
@@ -37,6 +46,9 @@ const Dashboard = () => {
                     <li>Tool 2</li>
                     <li>Tool 3</li>
                 </ul>
+                <button className={styles.logoutButton} onClick={handleLogout}>
+                    Logout
+                </button>
             </div>
             <div className={styles.content}>
                 <h1>Dashboard</h1>
