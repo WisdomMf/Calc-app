@@ -76,7 +76,7 @@ app.post('/login', async (req, res) => {
 
 // Example of a protected route
 app.get('/protected-route', verifyToken, (req, res) => {
-    res.send('This is a protected route');
+    // res.send('This is a protected route');
 });
 
 // Error handling middleware

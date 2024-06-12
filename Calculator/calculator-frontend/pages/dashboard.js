@@ -1,34 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import Sidebar from '../components/Sidebar';
+import MainContent from '../components/MainContent';
 
 const Dashboard = () => {
-    const [data, setData] = useState('');
-    const [error, setError] = useState('');
-
-    const fetchData = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/protected-route', {
-                headers: {
-                    'auth-token': token
-                }
-            });
-            setData(response.data);
-        } catch (err) {
-            setError('Error fetching protected data: ' + err.message);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const [activeTool, setActiveTool] = useState('');
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            {data ? <p>{data}</p> : <p>Loading...</p>}
-            {error && <p>{error}</p>}
+        <div className="dashboard-container">
+            <Sidebar setActiveTool={setActiveTool} />
+            <MainContent activeTool={activeTool} />
+            <style jsx>{`
+                .dashboard-container {
+                    display: flex;
+                    height: 100vh;
+                }
+            `}</style>
         </div>
     );
 };
+
 export default Dashboard;
