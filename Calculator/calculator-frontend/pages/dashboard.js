@@ -25,7 +25,7 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h1>Dashboard</h1>
+            <h1>Dashboard!</h1>
             {data ? <p>{data}</p> : <p>Loading...</p>}
             {error && <p>{error}</p>}
         </div>

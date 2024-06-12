@@ -1,20 +1,23 @@
-.container {
-    padding: 20px;
-    background-color: #f0f2f5;
-    min-height: 100vh;
-}
-
-.header {
+.dashboard {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
 }
 
-.title {
-    color: #0070f3;
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
 }
 
-.paragraph {
-    font-size: 1.2em;
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
 }

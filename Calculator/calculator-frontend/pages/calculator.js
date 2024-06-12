@@ -16,7 +16,7 @@ export default function Calculator() {
     return (
         <div className={styles.container}>
             <h1>Calculator</h1>
-            <p>Welcome to the calculator page!</p>
+            <p>Welcome to the calculator page!!</p>
             <button onClick={handleDashboardRedirect}>Admin Login</button>
         </div>
     );
