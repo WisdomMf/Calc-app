@@ -24,21 +24,25 @@ const LoginPage = () => {
 
     return (
         <div className={styles.loginContainer}>
-            <h1>Login</h1>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>Login</button>
-            {error && <p>{error}</p>}
+            <div className={styles.formContainer}>
+                <h1>Login</h1>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className={styles.inputField}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={styles.inputField}
+                />
+                <button onClick={handleLogin} className={styles.button}>Login</button>
+                {error && <p className={styles.error}>{error}</p>}
+            </div>
         </div>
     );
 };

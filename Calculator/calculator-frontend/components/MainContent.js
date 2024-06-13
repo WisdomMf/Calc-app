@@ -1,18 +1,27 @@
-// components/MainContent.js
+// /components/MainContent.js
 import React from 'react';
 
-const MainContent = ({ activeTool }) => {
+const MainContent = ({ activeItem }) => {
+    const renderContent = () => {
+        switch (activeItem) {
+            case 'basic':
+                return <div>Basic Calculator</div>;
+            case 'scientific':
+                return <div>Scientific Calculator</div>;
+            case 'programmer':
+                return <div>Programmer Calculator</div>;
+            case 'settings':
+                return <div>Settings</div>;
+            case 'profile':
+                return <div>Profile</div>;
+            default:
+                return <div>Select an option from the sidebar</div>;
+        }
+    };
+
     return (
-        <div className="main-content">
-            <h1>{activeTool ? activeTool : 'Dashboard'}</h1>
-            <p>{activeTool ? `This is the preview section for ${activeTool}.` : 'Please select a tool from the sidebar.'}</p>
-            <style jsx>{`
-                .main-content {
-                    flex-grow: 1;
-                    padding: 20px;
-                    background-color: #ecf0f1;
-                }
-            `}</style>
+        <div>
+            {renderContent()}
         </div>
     );
 };

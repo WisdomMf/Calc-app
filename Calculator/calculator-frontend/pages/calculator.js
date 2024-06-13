@@ -1,23 +1,20 @@
+import React from 'react';
 import { useRouter } from 'next/router';
-import styles from '../styles/Calculator.module.css';
 
 export default function Calculator() {
     const router = useRouter();
 
-    const handleDashboardRedirect = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            router.push('/dashboard');
-        } else {
-            router.push('/login');
-        }
+    const handleLoginRedirect = () => {
+        router.push('/login'); // Redirect to the login page
     };
 
     return (
-        <div className={styles.container}>
+        <div className="container">
             <h1>Calculator</h1>
             <p>Welcome to the calculator page!!</p>
-            <button onClick={handleDashboardRedirect}>Admin Login</button>
+            {/* This button redirects to the login page */}
+            <button onClick={handleLoginRedirect} className="loginButton">Login</button>
+            {/* Include your calculator component or details here */}
         </div>
     );
 }

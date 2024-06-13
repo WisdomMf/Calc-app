@@ -1,54 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import styles from '../styles/dashboard.module.css'; // Adjust the import path as necessary
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../components/Sidebar';
+import BasicCalculator from '../modules/calculators/BasicCalculator';
+import ScientificCalculator from '../modules/calculators/ScientificCalculator';
+import ProgrammerCalculator from '../modules/calculators/ProgrammerCalculator';
+import Profile from '../modules/Profile';
+import Settings from '../modules/Settings';
+import { ThemeProvider, useTheme } from '../context/ThemeContext';
+import '../styles/global.css'; // Ensure you have this style file to handle the dark mode styles
 
 const Dashboard = () => {
-    const [data, setData] = useState(null);
-    const router = useRouter();
+    const [activeItem, setActiveItem] = useState('profile');
+    const [components, setComponents] = useState({});
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const token = localStorage.getItem('auth-token');
-                const response = await axios.get('http://localhost:5000/protected-route', {
-                    headers: {
-                        'auth-token': token
-                    }
-                });
-                setData(response.data);
-            } catch (err) {
-                console.error('Error fetching protected data:', err.message);
-                if (err.response && err.response.status === 401) {
-                    router.push('/login');
-                }
-            }
-        };
+        setComponents({
+            profile: <Profile />,
+            settings: <Settings />,
+            basic: <BasicCalculator />,
+            scientific: <ScientificCalculator />,
+            programmer: <ProgrammerCalculator />
+        });
+    }, []);
 
-        fetchData();
-    }, [router]);
+    const renderContent = () => {
+        const ActiveComponent = components[activeItem];
+        return ActiveComponent || <p>Component not found.</p>;
+    };
+
+    const handleLogout = () => {
+        const confirmLogout = window.confirm('Are you sure you want to sign out?');
+        if (confirmLogout) {
+            const settings = {
+                theme: localStorage.getItem('theme')
+            };
+            localStorage.setItem('user-settings', JSON.stringify(settings));
+            localStorage.removeItem('auth-token');
+            window.location.href = '/'; // Redirect to home or login page
+        }
+    };
 
     return (
-        <div className={styles.dashboard}>
-            <div className={styles.sidebar}>
-                <h2>Admin Tools</h2>
-                <ul>
-                    <li>Tool 1</li>
-                    <li>Tool 2</li>
-                    <li>Tool 3</li>
-                </ul>
+        <ThemeProvider>
+            <div style={{ display: 'flex', height: '100vh' }}>
+                <Sidebar setActiveItem={setActiveItem} handleLogout={handleLogout} />
+                <div style={{ flex: 1, padding: '20px' }}>
+                    {renderContent()}
+                </div>
             </div>
-            <div className={styles.content}>
-                <h1>Dashboard</h1>
-                {data ? (
-                    <div>
-                        <p>{data}</p>
-                    </div>
-                ) : (
-                    <p>Loading...</p>
-                )}
-            </div>
-        </div>
+        </ThemeProvider>
     );
 };
 
