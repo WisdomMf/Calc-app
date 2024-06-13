@@ -9,4 +9,8 @@ module.exports = {
             },
         ];
     },
-}
+    images: {
+        domains: ['placehold.co'], // Add other domains as necessary
+    },
+    // Additional configurations can go here
+};
