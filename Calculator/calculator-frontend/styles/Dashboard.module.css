@@ -1,35 +1,8 @@
+/* dashboard.module.css */
 .dashboard {
     display: flex;
-    height: 100vh;
+    height: auto;
 }
-
-.sidebar {
-    width: 250px;
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar li {
-    margin: 10px 0;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-}
-/* 
-h1, h2 {
-    margin-top: 0;
-} */
 
 .logoutButton {
     background-color: #e74c3c;
@@ -42,4 +15,61 @@ h1, h2 {
 
 .logoutButton:hover {
     background-color: #c0392b;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ecf0f1;
+    overflow-y: auto;
+}
+.sidebar .calculatorSection ul li {
+    background-color: transparent; /* Ensure no background color for nested items by default */
+    color: white; /* Text color */
+    padding: 5px;
+    cursor: pointer;
+    text-align: left; /* Align text left for nested items */
+    margin: 5px 0; /* Add margin for spacing between items */
+}
+
+.sidebar .calculatorSection ul li:hover {
+    background-color: #1abc9c; /* Different color for nested item hover */
+    text-decoration: none; /* No underline on nested item hover */
+}/* dashboard.module.css */
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: #34495e; /* Default background color */
+    text-align: left;
+    list-style: none;
+}
+
+.sidebar ul li:hover {
+    background-color: #2c3e50;
+}
+
+.dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #34495e;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdownContent a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdownContent a:hover {
+    background-color: #2c3e50;
+}
+
+/* Show the dropdown content when the dropdown is active */
+.show {
+    display: block;
 }

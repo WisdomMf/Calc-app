@@ -1,39 +1,39 @@
-// components/Sidebar.js
-import React from 'react';
+// /components/Sidebar.js
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalculator, faCogs, faUser, faSignOutAlt, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import styles from '../styles/Sidebar.module.css';
 
-const Sidebar = ({ setActiveTool }) => {
+const Sidebar = ({ setActiveItem, handleLogout }) => {
+    const [isCalculatorDropdownOpen, setIsCalculatorDropdownOpen] = useState(false);
+
+    const toggleCalculatorDropdown = () => {
+        setIsCalculatorDropdownOpen(!isCalculatorDropdownOpen);
+    };
+
     return (
-        <div className="sidebar">
-            <h2>Admin Tools</h2>
+        <div className={styles.sidebar}>
             <ul>
-                <li onClick={() => setActiveTool('Tool 1')}>Tool 1</li>
-                <li onClick={() => setActiveTool('Tool 2')}>Tool 2</li>
-                <li onClick={() => setActiveTool('Tool 3')}>Tool 3</li>
-                <li onClick={() => setActiveTool('Tool 4')}>Tool 4</li>
+                <li onClick={toggleCalculatorDropdown}>
+                    <FontAwesomeIcon icon={faCalculator} /> Calculator {isCalculatorDropdownOpen ? <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />}
+                </li>
+                {isCalculatorDropdownOpen && (
+                    <ul className={styles.dropdown}>
+                        <li onClick={() => setActiveItem('basic')}><FontAwesomeIcon icon={faCalculator} /> Basic Calculator</li>
+                        <li onClick={() => setActiveItem('scientific')}><FontAwesomeIcon icon={faCalculator} /> Scientific Calculator</li>
+                        <li onClick={() => setActiveItem('programmer')}><FontAwesomeIcon icon={faCalculator} /> Programmer Calculator</li>
+                    </ul>
+                )}
+                <li onClick={() => setActiveItem('settings')}>
+                    <FontAwesomeIcon icon={faCogs} /> Settings
+                </li>
+                <li onClick={() => setActiveItem('profile')}>
+                    <FontAwesomeIcon icon={faUser} /> Profile
+                </li>
             </ul>
-            <style jsx>{`
-                .sidebar {
-                    width: 250px;
-                    background-color: #2c3e50;
-                    color: white;
-                    padding: 20px;
-                    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-                }
-                .sidebar h2 {
-                    margin-top: 0;
-                }
-                .sidebar ul {
-                    list-style-type: none;
-                    padding: 0;
-                }
-                .sidebar ul li {
-                    margin: 10px 0;
-                    cursor: pointer;
-                }
-                .sidebar ul li:hover {
-                    text-decoration: underline;
-                }
-            `}</style>
+            <button className={styles.logoutButton} onClick={handleLogout}>
+                <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+            </button>
         </div>
     );
 };
