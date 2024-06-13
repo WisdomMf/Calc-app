@@ -1,10 +1,21 @@
-// /components/Sidebar.js
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalculator, faCogs, faUser, faSignOutAlt, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import styles from '../styles/Sidebar.module.css';
 
-const Sidebar = ({ setActiveItem, handleLogout }) => {
+const Sidebar = ({ setActiveItem }) => {
+    const router = useRouter();
+
+    const handleLogout = () => {
+        try {
+            localStorage.removeItem('auth-token');
+            router.push('/login'); // Redirect to login page
+        } catch (err) {
+            console.error('Failed to logout:', err);
+        }
+    };
+
     const [isCalculatorDropdownOpen, setIsCalculatorDropdownOpen] = useState(false);
 
     const toggleCalculatorDropdown = () => {
@@ -14,16 +25,15 @@ const Sidebar = ({ setActiveItem, handleLogout }) => {
     return (
         <div className={styles.sidebar}>
             <ul>
-                <li onClick={toggleCalculatorDropdown}>
-                    <FontAwesomeIcon icon={faCalculator} /> Calculator {isCalculatorDropdownOpen ? <FontAwesomeIcon icon={faChevronUp} /> : <FontAwesomeIcon icon={faChevronDown} />}
+                <li onClick={() => setActiveItem('basicCalculator')}>
+                    <FontAwesomeIcon icon={faCalculator} /> Basic Calculator
                 </li>
-                {isCalculatorDropdownOpen && (
-                    <ul className={styles.dropdown}>
-                        <li onClick={() => setActiveItem('basic')}><FontAwesomeIcon icon={faCalculator} /> Basic Calculator</li>
-                        <li onClick={() => setActiveItem('scientific')}><FontAwesomeIcon icon={faCalculator} /> Scientific Calculator</li>
-                        <li onClick={() => setActiveItem('programmer')}><FontAwesomeIcon icon={faCalculator} /> Programmer Calculator</li>
-                    </ul>
-                )}
+                <li onClick={() => setActiveItem('scientificCalculator')}>
+                    <FontAwesomeIcon icon={faCalculator} /> Scientific Calculator
+                </li>
+                <li onClick={() => setActiveItem('programmerCalculator')}>
+                    <FontAwesomeIcon icon={faCalculator} /> Programmer Calculator
+                </li>
                 <li onClick={() => setActiveItem('settings')}>
                     <FontAwesomeIcon icon={faCogs} /> Settings
                 </li>

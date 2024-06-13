@@ -1,12 +1,12 @@
-// /pages/_app.js
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import { config } from '@fortawesome/fontawesome-svg-core';
-config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically
-
-import '../styles/global.css';
+import { ThemeProvider } from '../../context/ThemeContext';
+import '../styles/globals.css'; // Ensure you have this style file to handle the dark mode styles
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+    return (
+        <ThemeProvider>
+            <Component {...pageProps} />
+        </ThemeProvider>
+    );
 }
 
 export default MyApp;

@@ -10,7 +10,8 @@
 .formContainer {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 360px;
+    height: 280px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -42,8 +43,10 @@
 .error {
     color: red;
     margin-top: 10px;
+    font-size:14px !important;
+
 }
 
-h1{
-    text-align: center;
+.formContainer {
+    text-align: center !important;
 }

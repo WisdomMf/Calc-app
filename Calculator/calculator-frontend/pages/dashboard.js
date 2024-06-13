@@ -1,45 +1,45 @@
-// /pages/dashboard.js
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import MainContent from '../components/MainContent';
-import styles from '../styles/Dashboard.module.css';
+import BasicCalculator from '/modules/calculators/BasicCalculator';
+import ScientificCalculator from '/modules/calculators/ScientificCalculator';
+import ProgrammerCalculator from '/modules/calculators/ProgrammerCalculator';
+import Profile from '../modules/Profile';
+import Settings from '../modules/Settings';
+import { ThemeProvider } from '../context/ThemeContext';
 
 const Dashboard = () => {
-    const [activeItem, setActiveItem] = useState('basic');
-    const router = useRouter();
+    const [activeItem, setActiveItem] = useState('profile');
+    const [components, setComponents] = useState({});
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const token = localStorage.getItem('auth-token');
-                const response = await axios.get('http://localhost:5000/protected-route', {
-                    headers: { 'auth-token': token }
-                });
-                console.log(response.data);
-            } catch (err) {
-                console.error('Error fetching protected data:', err.message);
-                if (err.response && err.response.status === 401) {
-                    router.push('/login');
-                }
-            }
-        };
-        fetchData();
-    }, [router]);
+    React.useEffect(() => {
+        setComponents({
+            profile: <Profile />,
+            settings: <Settings />,
+            basicCalculator: <BasicCalculator />,
+            scientificCalculator: <ScientificCalculator />,
+            programmerCalculator: <ProgrammerCalculator />
+        });
+    }, []);
+
+    const renderContent = () => {
+        const ActiveComponent = components[activeItem];
+        return ActiveComponent || <p>Component not found.</p>;
+    };
 
     const handleLogout = () => {
         localStorage.removeItem('auth-token');
-        router.push('/login');
+        // Redirect to login or home page
     };
 
     return (
-        <div className={styles.dashboard}>
-            <Sidebar setActiveItem={setActiveItem} handleLogout={handleLogout} />
-            <div className={styles.contentArea}>
-                <MainContent activeItem={activeItem} />
+        <ThemeProvider>
+            <div style={{ display: 'flex' }}>
+                <Sidebar setActiveItem={setActiveItem} handleLogout={handleLogout} />
+                <div style={{ flex: 1, padding: '20px' }}>
+                    {renderContent()}
+                </div>
             </div>
-        </div>
+        </ThemeProvider>
     );
 };
 
