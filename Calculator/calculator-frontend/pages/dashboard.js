@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
-import BasicCalculator from '/modules/calculators/BasicCalculator';
-import ScientificCalculator from '/modules/calculators/ScientificCalculator';
-import ProgrammerCalculator from '/modules/calculators/ProgrammerCalculator';
+import BasicCalculator from '../modules/calculators/BasicCalculator';
+import ScientificCalculator from '../modules/calculators/ScientificCalculator';
+import ProgrammerCalculator from '../modules/calculators/ProgrammerCalculator';
 import Profile from '../modules/Profile';
 import Settings from '../modules/Settings';
-import { ThemeProvider } from '../context/ThemeContext';
+import { ThemeProvider, useTheme } from '../context/ThemeContext';
+import '../styles/global.css'; // Ensure you have this style file to handle the dark mode styles
 
 const Dashboard = () => {
     const [activeItem, setActiveItem] = useState('profile');
     const [components, setComponents] = useState({});
 
-    React.useEffect(() => {
+    useEffect(() => {
         setComponents({
             profile: <Profile />,
             settings: <Settings />,
-            basicCalculator: <BasicCalculator />,
-            scientificCalculator: <ScientificCalculator />,
-            programmerCalculator: <ProgrammerCalculator />
+            basic: <BasicCalculator />,
+            scientific: <ScientificCalculator />,
+            programmer: <ProgrammerCalculator />
         });
     }, []);
 
@@ -27,13 +28,20 @@ const Dashboard = () => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('auth-token');
-        // Redirect to login or home page
+        const confirmLogout = window.confirm('Are you sure you want to sign out?');
+        if (confirmLogout) {
+            const settings = {
+                theme: localStorage.getItem('theme')
+            };
+            localStorage.setItem('user-settings', JSON.stringify(settings));
+            localStorage.removeItem('auth-token');
+            window.location.href = '/'; // Redirect to home or login page
+        }
     };
 
     return (
         <ThemeProvider>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', height: '100vh' }}>
                 <Sidebar setActiveItem={setActiveItem} handleLogout={handleLogout} />
                 <div style={{ flex: 1, padding: '20px' }}>
                     {renderContent()}

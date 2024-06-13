@@ -1,5 +1,6 @@
-import { ThemeProvider } from '../../context/ThemeContext';
-import '../styles/globals.css'; // Ensure you have this style file to handle the dark mode styles
+import { ThemeProvider } from '../context/ThemeContext';
+import '../styles/global.css'; 
+
 
 function MyApp({ Component, pageProps }) {
     return (
