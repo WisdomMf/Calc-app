@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useAdmin } from '../context/AdminContext';
 import { useTheme } from '../context/ThemeContext';
 import dynamic from 'next/dynamic';
+import TaxCalculator from '../components/TaxCalculator'; // Ensure this path is correct
 import styles from '../styles/AdminDashboard.module.css';
-import TaxCalculator from '../components/TaxCalculator'; // Import the TaxCalculator component
 
-// Dynamically import the CodeEditor component with SSR disabled
 const CodeEditor = dynamic(
     async () => {
-        await import('codemirror/lib/codemirror.css'); // Import CodeMirror base styles
-        await import('codemirror/theme/material.css'); // Import a CodeMirror theme
-        await import('codemirror/mode/javascript/javascript'); // Import JavaScript mode for CodeMirror
+        await import('codemirror/lib/codemirror.css');
+        await import('codemirror/theme/material.css');
+        await import('codemirror/mode/javascript/javascript');
 
         const { UnControlled: CodeMirror } = await import('react-codemirror2');
         return CodeMirror;
@@ -79,24 +78,6 @@ const AdminDashboard = () => {
         }
     };
 
-    const handleCalculateTax = async (formData) => {
-        try {
-            const response = await fetch('/api/tax', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const result = await response.json();
-            alert(`Total Tax: ${result.totalTax}`);
-        } catch (error) {
-            console.error('Failed to calculate tax:', error);
-            alert('Failed to calculate tax');
-        }
-    };
-
     return (
         <div className={`${styles.dashboard} ${theme}`}>
             <div className={styles.content}>
@@ -110,10 +91,10 @@ const AdminDashboard = () => {
                         </select>
                     </div>
                     <div className={styles.calculatorPreview}>
-                        {selectedCalculator ? (
-                            <div>{calculators.find(calc => calc.id === selectedCalculator).name} Preview</div>
+                        {selectedCalculator === 'incomeTax' ? (
+                            <TaxCalculator onCalculate={(formData) => console.log('Calculate', formData)} />
                         ) : (
-                            <div>Select a calculator to preview</div>
+                            <div>Select an income tax calculator to preview</div>
                         )}
                     </div>
                 </div>
@@ -149,9 +130,6 @@ const AdminDashboard = () => {
                             <button onClick={handleSaveCode}>Save Code</button>
                         </div>
                     </div>
-                )}
-                {selectedCalculator === 'incomeTax' && (
-                    <TaxCalculator onCalculate={handleCalculateTax} />
                 )}
             </div>
         </div>
