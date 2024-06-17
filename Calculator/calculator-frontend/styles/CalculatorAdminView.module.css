@@ -1,0 +1,67 @@
+/* styles/CalculatorAdminView.module.css */
+.container {
+    display: flex;
+    flex-grow: 1;
+}
+
+.calculatorSection {
+    flex: 3;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-right: 2px solid #ccc;
+}
+
+.codeSection {
+    flex: 2;
+    padding: 20px;
+    background-color: #e1e1e1;
+}
+
+.dropdownContainer {
+    margin-bottom: 20px;
+}
+
+.calculatorPreview {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    flex: 1;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #ccc;
+    border: none;
+    border-bottom: 2px solid transparent;
+}
+
+.tabs button:hover {
+    background-color: #bbb;
+}
+
+.tabs .activeTab {
+    border-bottom: 2px solid #007bff;
+}
+
+.codeEditor {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.codeEditor textarea {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}

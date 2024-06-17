@@ -8,7 +8,7 @@
 }
 
 .sidebar.dark {
-    background-color: #2c3e50;
+    background-color: #2c2c40;
 }
 
 
@@ -33,13 +33,13 @@
 }
 
 .sidebar ul li:hover {
-    background-color: #2c3e50;
-    color:white;
+    background-color: #cccdfc;
+    color:#696bff;
 }
 
 .sidebar.dark ul li:hover {
-    background-color: #ffffff;
-    color:rgb(0, 0, 0);
+    background-color: #35365f;
+    color:#696bff;
 }
 
 .sidebar .dropdown {
@@ -57,4 +57,43 @@
 
 .logoutButton:hover {
     background-color: #c0392b;
+}
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #34495e;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    user-select:none;
+}
+
+.sidebar.light {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+.sidebar.dark {
+    background-color: #2c2c40;
+}
+
+/* Profile Container Styles */
+.profile-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 20px 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container.light {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+.profile-container.dark {
+    background-color: #333394;
+    color: #ddd;
 }

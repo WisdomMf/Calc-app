@@ -5,6 +5,11 @@
     text-align: center;
     position: relative; /* Required for absolute positioning of the login button */
     min-height: 100vh; /* Full height */
+    padding-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
 }
 
 .loginButton {
