@@ -1,25 +1,23 @@
-// pages/api/getCalculatorCode.js
-import connectDB from '../../lib/db';
-import calculatorConfig from '../../config/calculatorConfig';
+import dbConnect from '../../utils/dbConnect';
+import Calculator from '../../models/Calculator';
 
 export default async function handler(req, res) {
+    const { calculatorId } = req.query;
+
+    await dbConnect();
+
     try {
-        await connectDB();
-
-        const { calculatorId } = req.query;
-        const calculator = calculatorConfig[calculatorId];
-
-        if (calculator) {
-            res.status(200).json({
-                success: true,
-                frontendCode: calculator.frontendCode,
-                backendCode: calculator.backendCode
-            });
-        } else {
-            res.status(404).json({ success: false, message: 'Calculator not found' });
+        const calculator = await Calculator.findOne({ id: calculatorId });
+        if (!calculator) {
+            return res.status(404).json({ success: false, message: 'Calculator not found' });
         }
+
+        res.status(200).json({ 
+            success: true, 
+            frontendCode: calculator.frontendCode, 
+            backendCode: calculator.backendCode 
+        });
     } catch (error) {
-        console.error('Error fetching calculator code:', error); // Log the error for debugging
-        res.status(500).json({ success: false, message: 'Server error' });
+        res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 }

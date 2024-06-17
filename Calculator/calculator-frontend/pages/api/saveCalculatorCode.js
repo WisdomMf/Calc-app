@@ -1,35 +1,20 @@
-// pages/api/saveCalculatorCode.js
-import connectDB from '../../lib/db';
+import dbConnect from '../../utils/dbConnect';
 import Calculator from '../../models/Calculator';
 
 export default async function handler(req, res) {
+    const { calculatorId, frontendCode, backendCode } = req.body;
+
+    await dbConnect();
+
     try {
-        await connectDB();
-
-        if (req.method !== 'POST') {
-            return res.status(405).json({ success: false, message: 'Method not allowed' });
-        }
-
-        const { calculatorId, frontendCode, backendCode } = req.body;
-
-        if (!calculatorId || !frontendCode || !backendCode) {
-            return res.status(400).json({ success: false, message: 'Missing required fields' });
-        }
-
-        let calculator = await Calculator.findOne({ calculatorId });
-
-        if (!calculator) {
-            calculator = new Calculator({ calculatorId, frontendCode, backendCode });
-        } else {
-            calculator.frontendCode = frontendCode;
-            calculator.backendCode = backendCode;
-        }
-
-        await calculator.save();
+        await Calculator.updateOne(
+            { id: calculatorId },
+            { frontendCode, backendCode },
+            { upsert: true }
+        );
 
         res.status(200).json({ success: true, message: 'Code updated successfully' });
     } catch (error) {
-        console.error('Error saving calculator code:', error); // Log the error for debugging
-        res.status(500).json({ success: false, message: 'Server error' });
+        res.status(500).json({ success: false, message: 'Failed to update code' });
     }
 }

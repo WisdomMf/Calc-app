@@ -6,6 +6,10 @@ const CalculatorSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    title: {
+        type: String,
+        required: true
+    },
     frontendCode: {
         type: String,
         required: true
