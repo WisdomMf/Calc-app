@@ -33,6 +33,22 @@ const AdminDashboard = () => {
     ];
 
     useEffect(() => {
+        const fetchInitialCalculatorCode = async () => {
+            const response = await fetch(`/api/getCalculatorCode?calculatorId=${selectedCalculator}`);
+            const data = await response.json();
+            if (data.success) {
+                setFrontendCode(data.frontendCode || '');
+                setBackendCode(data.backendCode || '');
+            } else {
+                setFrontendCode('');
+                setBackendCode('');
+            }
+        };
+
+        fetchInitialCalculatorCode();
+    }, []);
+
+    useEffect(() => {
         const fetchCalculatorCode = async () => {
             const response = await fetch(`/api/getCalculatorCode?calculatorId=${selectedCalculator}`);
             const data = await response.json();
