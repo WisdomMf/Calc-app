@@ -3,6 +3,7 @@ import { useAdmin } from '../context/AdminContext';
 import { useTheme } from '../context/ThemeContext';
 import dynamic from 'next/dynamic';
 import styles from '../styles/AdminDashboard.module.css';
+import TaxCalculator from '../components/TaxCalculator'; // Import the TaxCalculator component
 
 // Dynamically import the CodeEditor component with SSR disabled
 const CodeEditor = dynamic(
@@ -78,6 +79,24 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleCalculateTax = async (formData) => {
+        try {
+            const response = await fetch('/api/tax', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+            alert(`Total Tax: ${result.totalTax}`);
+        } catch (error) {
+            console.error('Failed to calculate tax:', error);
+            alert('Failed to calculate tax');
+        }
+    };
+
     return (
         <div className={`${styles.dashboard} ${theme}`}>
             <div className={styles.content}>
@@ -130,6 +149,9 @@ const AdminDashboard = () => {
                             <button onClick={handleSaveCode}>Save Code</button>
                         </div>
                     </div>
+                )}
+                {selectedCalculator === 'incomeTax' && (
+                    <TaxCalculator onCalculate={handleCalculateTax} />
                 )}
             </div>
         </div>
