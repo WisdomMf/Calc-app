@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const CalculatorSchema = new mongoose.Schema({
-    calculatorId: {
+    id: {
         type: String,
         required: true,
         unique: true
@@ -16,5 +16,4 @@ const CalculatorSchema = new mongoose.Schema({
     }
 });
 
-const Calculator = mongoose.models.Calculator || mongoose.model('Calculator', CalculatorSchema);
-export default Calculator;
+export default mongoose.models.Calculator || mongoose.model('Calculator', CalculatorSchema);

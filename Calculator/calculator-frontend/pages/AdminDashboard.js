@@ -32,37 +32,25 @@ const AdminDashboard = () => {
         { name: 'Income Tax Calculator', id: 'incomeTax' }
     ];
 
-    useEffect(() => {
-        const fetchInitialCalculatorCode = async () => {
-            const response = await fetch(`/api/getCalculatorCode?calculatorId=${selectedCalculator}`);
-            const data = await response.json();
-            if (data.success) {
-                setFrontendCode(data.frontendCode || '');
-                setBackendCode(data.backendCode || '');
-            } else {
-                setFrontendCode('');
-                setBackendCode('');
-            }
-        };
-
-        fetchInitialCalculatorCode();
-    }, []);
+    const fetchCalculatorCode = async (calculatorId) => {
+        const response = await fetch(`/api/getCalculatorCode?calculatorId=${calculatorId}`);
+        const data = await response.json();
+        if (data.success) {
+            setFrontendCode(data.frontendCode || '');
+            setBackendCode(data.backendCode || '');
+        } else {
+            setFrontendCode('');
+            setBackendCode('');
+        }
+    };
 
     useEffect(() => {
-        const fetchCalculatorCode = async () => {
-            const response = await fetch(`/api/getCalculatorCode?calculatorId=${selectedCalculator}`);
-            const data = await response.json();
-            if (data.success) {
-                setFrontendCode(data.frontendCode || '');
-                setBackendCode(data.backendCode || '');
-            } else {
-                setFrontendCode('');
-                setBackendCode('');
-            }
-        };
-
-        fetchCalculatorCode();
+        fetchCalculatorCode(selectedCalculator);
     }, [selectedCalculator]);
+
+    useEffect(() => {
+        fetchCalculatorCode('basic');
+    }, []);
 
     const handleSaveCode = async () => {
         try {
