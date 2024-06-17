@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useAdmin } from '../context/AdminContext';
 import { useTheme } from '../context/ThemeContext';
 import dynamic from 'next/dynamic';
-import TaxCalculator from '../components/TaxCalculator'; // Ensure this path is correct
 import styles from '../styles/AdminDashboard.module.css';
 
+// Dynamically import the CodeEditor component with SSR disabled
 const CodeEditor = dynamic(
     async () => {
-        await import('codemirror/lib/codemirror.css');
-        await import('codemirror/theme/material.css');
-        await import('codemirror/mode/javascript/javascript');
+        await import('codemirror/lib/codemirror.css'); // Import CodeMirror base styles
+        await import('codemirror/theme/material.css'); // Import a CodeMirror theme
+        await import('codemirror/mode/javascript/javascript'); // Import JavaScript mode for CodeMirror
 
         const { UnControlled: CodeMirror } = await import('react-codemirror2');
         return CodeMirror;
@@ -24,6 +24,11 @@ const AdminDashboard = () => {
     const [frontendCode, setFrontendCode] = useState('');
     const [backendCode, setBackendCode] = useState('');
     const [activeTab, setActiveTab] = useState('frontend');
+    const [newCalculator, setNewCalculator] = useState({
+        name: '',
+        frontendCode: '',
+        backendCode: ''
+    });
 
     const calculators = [
         { name: 'Basic Calculator', id: 'basic' },
@@ -78,6 +83,30 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleCreateCalculator = async () => {
+        try {
+            const response = await fetch('/api/createCalculator', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newCalculator)
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert('Calculator created successfully!');
+                setSelectedCalculator(data.id); // Select the newly created calculator
+                fetchCalculatorCode(data.id); // Fetch its code
+            } else {
+                alert('Failed to create calculator');
+            }
+        } catch (error) {
+            console.error('Error creating calculator:', error);
+            alert('Error creating calculator');
+        }
+    };
+
     return (
         <div className={`${styles.dashboard} ${theme}`}>
             <div className={styles.content}>
@@ -91,10 +120,10 @@ const AdminDashboard = () => {
                         </select>
                     </div>
                     <div className={styles.calculatorPreview}>
-                        {selectedCalculator === 'incomeTax' ? (
-                            <TaxCalculator onCalculate={(formData) => console.log('Calculate', formData)} />
+                        {selectedCalculator ? (
+                            <div>{calculators.find(calc => calc.id === selectedCalculator).name} Preview</div>
                         ) : (
-                            <div>Select an income tax calculator to preview</div>
+                            <div>Select a calculator to preview</div>
                         )}
                     </div>
                 </div>
@@ -129,6 +158,33 @@ const AdminDashboard = () => {
                             )}
                             <button onClick={handleSaveCode}>Save Code</button>
                         </div>
+                    </div>
+                )}
+                {isAdmin && (
+                    <div className={styles.createCalculator}>
+                        <h2>Create New Calculator</h2>
+                        <form>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Calculator Name"
+                                value={newCalculator.name}
+                                onChange={e => setNewCalculator({ ...newCalculator, name: e.target.value })}
+                            />
+                            <textarea
+                                name="frontendCode"
+                                placeholder="Frontend Code"
+                                value={newCalculator.frontendCode}
+                                onChange={e => setNewCalculator({ ...newCalculator, frontendCode: e.target.value })}
+                            />
+                            <textarea
+                                name="backendCode"
+                                placeholder="Backend Code"
+                                value={newCalculator.backendCode}
+                                onChange={e => setNewCalculator({ ...newCalculator, backendCode: e.target.value })}
+                            />
+                            <button type="button" onClick={handleCreateCalculator}>Create Calculator</button>
+                        </form>
                     </div>
                 )}
             </div>
