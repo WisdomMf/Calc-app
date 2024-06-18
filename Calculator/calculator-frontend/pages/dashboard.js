@@ -3,13 +3,14 @@ import Sidebar from '../components/Sidebar';
 import BasicCalculator from '../modules/Calculators/BasicCalculator';
 import ScientificCalculator from '../modules/calculators/ScientificCalculator';
 import ProgrammerCalculator from '../modules/calculators/ProgrammerCalculator';
-import AdminDashboard from '../pages/AdminDashboard';
+import AdminDashboard from './CalculatorEditor';
 import Profile from '../modules/Profile';
 import Settings from '../modules/Settings';
 import Users from '../modules/Users';
 import CalculatorAdminView from '../modules/Calculators/BasicCalculator'; // Import admin view component
 import { ThemeProvider, useTheme } from '../context/ThemeContext';
 import '../styles/global.css';
+import CreateCalculator from './CreateCalculator';
 
 const Dashboard = () => {
     const [activeItem, setActiveItem] = useState('profile');
@@ -25,6 +26,7 @@ const Dashboard = () => {
             scientific: <ScientificCalculator />,
             programmer: <ProgrammerCalculator />,
             AdminDashboard: <AdminDashboard />,
+            CreateCalculator: <CreateCalculator />,
             users: <Users />
         });
     }, []);

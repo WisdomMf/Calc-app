@@ -1,24 +1,30 @@
 {
-  "pages\\AdminDashboard.js -> codemirror/lib/codemirror.css": {
-    "id": "pages\\AdminDashboard.js -> codemirror/lib/codemirror.css",
+  "pages\\CalculatorEditor.js -> codemirror/lib/codemirror.css": {
+    "id": "pages\\CalculatorEditor.js -> codemirror/lib/codemirror.css",
     "files": [
       "static/chunks/node_modules_codemirror_lib_codemirror_css.js"
     ]
   },
-  "pages\\AdminDashboard.js -> codemirror/mode/javascript/javascript": {
-    "id": "pages\\AdminDashboard.js -> codemirror/mode/javascript/javascript",
+  "pages\\CalculatorEditor.js -> codemirror/mode/htmlmixed/htmlmixed": {
+    "id": "pages\\CalculatorEditor.js -> codemirror/mode/htmlmixed/htmlmixed",
+    "files": [
+      "static/chunks/node_modules_codemirror_mode_htmlmixed_htmlmixed_js.js"
+    ]
+  },
+  "pages\\CalculatorEditor.js -> codemirror/mode/javascript/javascript": {
+    "id": "pages\\CalculatorEditor.js -> codemirror/mode/javascript/javascript",
     "files": [
       "static/chunks/node_modules_codemirror_mode_javascript_javascript_js.js"
     ]
   },
-  "pages\\AdminDashboard.js -> codemirror/theme/material.css": {
-    "id": "pages\\AdminDashboard.js -> codemirror/theme/material.css",
+  "pages\\CalculatorEditor.js -> codemirror/theme/material.css": {
+    "id": "pages\\CalculatorEditor.js -> codemirror/theme/material.css",
     "files": [
       "static/chunks/node_modules_codemirror_theme_material_css.js"
     ]
   },
-  "pages\\AdminDashboard.js -> react-codemirror2": {
-    "id": "pages\\AdminDashboard.js -> react-codemirror2",
+  "pages\\CalculatorEditor.js -> react-codemirror2": {
+    "id": "pages\\CalculatorEditor.js -> react-codemirror2",
     "files": [
       "static/chunks/node_modules_react-codemirror2_index_js.js"
     ]

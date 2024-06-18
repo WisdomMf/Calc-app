@@ -4,96 +4,81 @@
     color: white;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 98vh;
+    user-select: none;
+    padding-top: 20px;
 }
-
-.sidebar.dark {
-    background-color: #2c2c40;
-}
-
-
 
 .sidebar.light {
     background-color: #ecf0f1;
     color: #2c3e50;
 }
 
+.sidebar.dark {
+    background-color: #2c2c40;
+}
+
 .sidebar ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    flex-grow: 1;
 }
 
 .sidebar ul li {
-    padding: 10px;
+    padding: 10px 20px;
     cursor: pointer;
     color: inherit;
     text-align: left;
-    display: flex;
+    display: block;
     align-items: center;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
 .sidebar ul li:hover {
-    background-color: #cccdfc;
-    color:#696bff;
+    background-color: #5a6b7a; /* lighter shade for hover effect */
 }
 
 .sidebar.dark ul li:hover {
-    background-color: #35365f;
-    color:#696bff;
+    background-color: #3b3f4f; /* darker shade for hover effect in dark mode */
 }
 
-.sidebar .dropdown {
+.sidebar .submenu {
+    display: none; /* Hidden by default */
     padding-left: 20px;
+    background-color: #2c3e50;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .submenu li {
+    padding: 8px 20px;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+    border-left: 4px solid #696bff;
+}
+
+.sidebar .submenu li:hover {
+    background-color: #5b6b85;
+}
+
+.sidebar .submenu.open {
+    display: block;
 }
 
 .logoutButton {
     background-color: #e74c3c;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 20px;
     cursor: pointer;
     margin-top: auto;
+    transition: background-color 0.3s ease;
 }
 
 .logoutButton:hover {
     background-color: #c0392b;
-}
-/* Sidebar Styles */
-.sidebar {
-    width: 250px;
-    background-color: #34495e;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    user-select:none;
-}
-
-.sidebar.light {
-    background-color: #ecf0f1;
-    color: #2c3e50;
-}
-
-.sidebar.dark {
-    background-color: #2c2c40;
-}
-
-/* Profile Container Styles */
-.profile-container {
-    width: 100%;
-    max-width: 300px;
-    margin: 20px auto;
-    padding: 20px 50px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.profile-container.light {
-    background-color: #ecf0f1;
-    color: #2c3e50;
-}
-
-.profile-container.dark {
-    background-color: #333394;
-    color: #ddd;
 }
